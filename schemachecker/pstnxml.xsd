@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://uri.etsi.org/ngn/params/xml/simservs/pstn" xmlns:ns1="http://uri.etsi.org/ngn/params/xml/simservs/pstn" targetNamespace="http://uri.etsi.org/ngn/params/xml/simservs/pstn" elementFormDefault="qualified">
+	<xs:annotation>
+		<xs:documentation>XML Schema definition for mapping of some PSTN into SIP MIME Bodies</xs:documentation>
+	</xs:annotation>
+	<!--Definition of simple types-->
+	<xs:simpleType name="OneBitType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-1]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TwoBitType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-1][0-1]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ThreeBitType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-1][0-1][0-1]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FourBitType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-1][0-1][0-1][0-1]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FiveBitType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-1][0-1][0-1][0-1][0-1]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SixBitType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-1][0-1][0-1][0-1][0-1][0-1]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SevenBitType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-1][0-1][0-1][0-1][0-1][0-1][0-1]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!--Definition of complex types-->
+	<!--Definition of BearerCapability Octets-->
+	<xs:complexType name="BCOctet3Type">
+		<xs:sequence>
+			<xs:element name="CodingStandard" type="TwoBitType"/>
+			<xs:element name="InformationTransferCapability" type="FiveBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BCOctet4Type">
+		<xs:sequence>
+			<xs:element name="TransferMode" type="TwoBitType"/>
+			<xs:element name="InformationTransferRate" type="FiveBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BCOctet4-1Type">
+		<xs:sequence>
+			<xs:element name="RateMultiplier" type="SevenBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BCOctet5Type">
+		<xs:sequence>
+			<xs:element name="Layer1Identification" type="TwoBitType"/>
+			<xs:element name="UserInfoLayer1Protocol" type="FiveBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BCOctet5aType">
+		<xs:sequence>
+			<xs:element name="SynchronousAsynchronous" type="OneBitType"/>
+			<xs:element name="Negotiation" type="OneBitType"/>
+			<xs:element name="UserRate" type="FiveBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BCOctet5bV110Type">
+		<xs:sequence>
+			<xs:element name="IntermediateRate" type="TwoBitType"/>
+			<xs:element name="NIConTX" type="OneBitType"/>
+			<xs:element name="NIConRX" type="OneBitType"/>
+			<xs:element name="FlowControlOnTX" type="OneBitType"/>
+			<xs:element name="FlowControlOnRX" type="OneBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BCOctet5bV120Type">
+		<xs:sequence>
+			<xs:element name="RateAdaptionHeader" type="OneBitType"/>
+			<xs:element name="MultipleFrameEstablishmentSupport" type="OneBitType"/>
+			<xs:element name="ModeOfOperation" type="OneBitType"/>
+			<xs:element name="LogicalLinkIdentifier" type="OneBitType"/>
+			<xs:element name="Assignor" type="OneBitType"/>
+			<xs:element name="InbandOutbandNegotiation" type="OneBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BCOctet5cType">
+		<xs:sequence>
+			<xs:element name="NumberOfStopBits" type="TwoBitType"/>
+			<xs:element name="NumberOfDataBits" type="TwoBitType"/>
+			<xs:element name="Parity" type="ThreeBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BCOctet5dType">
+		<xs:sequence>
+			<xs:element name="DuplexMode" type="OneBitType"/>
+			<xs:element name="ModemType" type="SixBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BCOctet6Type">
+		<xs:sequence>
+			<xs:element name="Layer2Identification" type="TwoBitType"/>
+			<xs:element name="UserInfoLayer2Protocol" type="FiveBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BCOctet7Type">
+		<xs:sequence>
+			<xs:element name="Layer3Identification" type="TwoBitType"/>
+			<xs:element name="UserInfoLayer3Protocol" type="FiveBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BCOctet7aType">
+		<xs:sequence>
+			<xs:element name="AdditionalLayer3Info" type="FourBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BCOctet7bType">
+		<xs:sequence>
+			<xs:element name="AdditionalLayer3Info" type="FourBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--Definition of High Layer Compatibility Octets-->
+	<xs:complexType name="HLOctet3Type">
+		<xs:sequence>
+			<xs:element name="CodingStandard" type="TwoBitType"/>
+			<xs:element name="Interpretation" type="ThreeBitType"/>
+			<xs:element name="PresentationMethod" type="TwoBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HLOctet4Type">
+		<xs:sequence>
+			<xs:element name="HighLayerCharacteristics" type="SevenBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HLOctet4aMaintenanceType">
+		<xs:sequence>
+			<xs:element name="HighLayerCharacteristics" type="SevenBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HLOctet4aAudioType">
+		<xs:sequence>
+			<xs:element name="VideoTelephonyCharacteristics" type="SevenBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--Definition of Low Layer Compatibility Octets-->
+	<xs:complexType name="LLOctet3Type">
+		<xs:sequence>
+			<xs:element name="CodingStandard" type="TwoBitType"/>
+			<xs:element name="InformationTransferCapability" type="FiveBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LLOctet3aType">
+		<xs:sequence>
+			<xs:element name="NegotiationIndicator" type="OneBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LLOctet4Type">
+		<xs:sequence>
+			<xs:element name="TransferMode" type="TwoBitType"/>
+			<xs:element name="InformationTransferRate" type="FiveBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LLOctet4-1Type">
+		<xs:sequence>
+			<xs:element name="RateMultiplier" type="SevenBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LLOctet5Type">
+		<xs:sequence>
+			<xs:element name="Layer1Identification" type="TwoBitType"/>
+			<xs:element name="UserInfoLayer1Protocol" type="FiveBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LLOctet5aType">
+		<xs:sequence>
+			<xs:element name="SynchronousAsynchronous" type="OneBitType"/>
+			<xs:element name="Negotiation" type="OneBitType"/>
+			<xs:element name="UserRate" type="FiveBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LLOctet5bV110Type">
+		<xs:sequence>
+			<xs:element name="IntermediateRate" type="TwoBitType"/>
+			<xs:element name="NIConTX" type="OneBitType"/>
+			<xs:element name="NIConRX" type="OneBitType"/>
+			<xs:element name="FlowControlOnTX" type="OneBitType"/>
+			<xs:element name="FlowControlOnRX" type="OneBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LLOctet5bV120Type">
+		<xs:sequence>
+			<xs:element name="RateAdaptionHeader" type="OneBitType"/>
+			<xs:element name="MultipleFrameEstablishmentSupport" type="OneBitType"/>
+			<xs:element name="ModeOfOperation" type="OneBitType"/>
+			<xs:element name="LogicalLinkIdentifier" type="OneBitType"/>
+			<xs:element name="Assignor" type="OneBitType"/>
+			<xs:element name="InbandOutbandNegotiation" type="OneBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LLOctet5cType">
+		<xs:sequence>
+			<xs:element name="NumberOfStopBits" type="TwoBitType"/>
+			<xs:element name="NumberOfDataBits" type="TwoBitType"/>
+			<xs:element name="Parity" type="ThreeBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LLOctet5dType">
+		<xs:sequence>
+			<xs:element name="DuplexMode" type="OneBitType"/>
+			<xs:element name="ModemType" type="SixBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LLOctet6Type">
+		<xs:sequence>
+			<xs:element name="Layer2Identification" type="TwoBitType"/>
+			<xs:element name="UserInfoLayer2Protocol" type="FiveBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LLOctet6aHDLCType">
+		<xs:sequence>
+			<xs:element name="Mode" type="TwoBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LLOctet6aUserSpecificType">
+		<xs:sequence>
+			<xs:element name="UserSpecificLayer2Information" type="SevenBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LLOctet6bType">
+		<xs:sequence>
+			<xs:element name="WindowSize" type="SevenBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LLOctet7Type">
+		<xs:sequence>
+			<xs:element name="Layer3Identification" type="TwoBitType"/>
+			<xs:element name="UserInfoLayer3Protocol" type="FiveBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LLOctet7aUserSpecificType">
+		<xs:sequence>
+			<xs:element name="OptionalLayer3Information" type="SevenBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LLOctet7aX25Type">
+		<xs:sequence>
+			<xs:element name="Mode" type="TwoBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LLOctet7bX25Type">
+		<xs:sequence>
+			<xs:element name="DefaultPacketSize" type="FourBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LLOctet7cType">
+		<xs:sequence>
+			<xs:element name="PacketWindowSize" type="SevenBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LLOctet7aTR9577Type">
+		<xs:sequence>
+			<xs:element name="AdditionalLayer3Info" type="FourBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LLOctet7bTR9577Type">
+		<xs:sequence>
+			<xs:element name="AdditionalLayer3Info" type="FourBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DispOctet3Type">
+		<xs:sequence>
+			<xs:element name="DisplayInformation" type="SevenBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--Definition of the information elements-->
+	<xs:complexType name="BearerCapabilityType">
+		<xs:sequence>
+			<xs:element name="BCoctet3" type="BCOctet3Type"/>
+			<xs:element name="BCoctet4" type="BCOctet4Type"/>
+			<xs:element name="BCoctet4-1" type="BCOctet4-1Type" minOccurs="0"/>
+			<xs:element name="BCoctet5" type="BCOctet5Type" minOccurs="0"/>
+			<xs:element name="BCoctet5a" type="BCOctet5aType" minOccurs="0"/>
+			<xs:element name="BCoctet5bV110" type="BCOctet5bV110Type" minOccurs="0"/>
+			<xs:element name="BCoctet5bV120" type="BCOctet5bV120Type" minOccurs="0"/>
+			<xs:element name="BCoctet5c" type="BCOctet5cType" minOccurs="0"/>
+			<xs:element name="BCoctet5d" type="BCOctet5dType" minOccurs="0"/>
+			<xs:element name="BCoctet6" type="BCOctet6Type" minOccurs="0"/>
+			<xs:element name="BCoctet7" type="BCOctet7Type" minOccurs="0"/>
+			<xs:element name="BCoctet7a" type="BCOctet7aType" minOccurs="0"/>
+			<xs:element name="BCoctet7b" type="BCOctet7bType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HighLayerCompatibilityType">
+		<xs:sequence>
+			<xs:element name="HLOctet3" type="HLOctet3Type"/>
+			<xs:element name="HLOctet4" type="HLOctet4Type"/>
+			<xs:element name="HLOctet4aMaintenance" type="HLOctet4aMaintenanceType" minOccurs="0"/>
+			<xs:element name="HLOctet4aAudio" type="HLOctet4aAudioType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LowLayerCompatibilityType">
+		<xs:sequence>
+			<xs:element name="LLOctet3" type="LLOctet3Type"/>
+			<xs:element name="LLOctet3a" type="LLOctet3aType" minOccurs="0"/>
+			<xs:element name="LLOctet4" type="LLOctet4Type"/>
+			<xs:element name="LLOctet4-1" type="LLOctet4-1Type" minOccurs="0"/>
+			<xs:element name="LLOctet5" type="LLOctet5Type" minOccurs="0"/>
+			<xs:element name="LLOctet5a" type="LLOctet5aType" minOccurs="0"/>
+			<xs:element name="LLOctet5bV110" type="LLOctet5bV110Type" minOccurs="0"/>
+			<xs:element name="LLOctet5bV120" type="LLOctet5bV120Type" minOccurs="0"/>
+			<xs:element name="LLOctet5c" type="LLOctet5cType" minOccurs="0"/>
+			<xs:element name="LLOctet5d" type="LLOctet5dType" minOccurs="0"/>
+			<xs:element name="LLOctet6" type="LLOctet6Type" minOccurs="0"/>
+			<xs:element name="LLOctet6aHDLC" type="LLOctet6aHDLCType" minOccurs="0"/>
+			<xs:element name="LLOctet6aUserSpecific" type="LLOctet6aUserSpecificType" minOccurs="0"/>
+			<xs:element name="LLOctet6b" type="LLOctet6bType" minOccurs="0"/>
+			<xs:element name="LLOctet7" type="LLOctet7Type"/>
+			<xs:element name="LLOctet7aUserSpecific" type="LLOctet7aUserSpecificType" minOccurs="0"/>
+			<xs:element name="LLOctet7aX25" type="LLOctet7aX25Type" minOccurs="0"/>
+			<xs:element name="LLOctet7bX25" type="LLOctet7bX25Type" minOccurs="0"/>
+			<xs:element name="LLOctet7c" type="LLOctet7cType" minOccurs="0"/>
+			<xs:element name="LLOctet7aTR9577" type="LLOctet7aTR9577Type" minOccurs="0"/>
+			<xs:element name="LLOctet7bTR9577" type="LLOctet7bTR9577Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DisplayType">
+		<xs:sequence>
+			<xs:element name="DispOctet3" type="DispOctet3Type"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--Definition of progress indicator-->
+	<xs:complexType name="ProgressOctet3Type">
+		<xs:sequence>
+			<xs:element name="CodingStandard" type="TwoBitType"/>
+			<xs:element name="Location" type="FourBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProgressOctet4Type">
+		<xs:sequence>
+			<xs:element name="ProgressDescription" type="SevenBitType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProgressIndicatorType">
+		<xs:sequence>
+			<xs:element name="ProgressOctet3" type="ProgressOctet3Type"/>
+			<xs:element name="ProgressOctet4" type="ProgressOctet4Type"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--Definition of sendingCompleteIndication -->
+	<xs:element name="sendingCompleteIndication"/>
+	<!--Definition of document structure-->
+	<xs:element name="PSTN">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="BearerCapability" type="BearerCapabilityType" minOccurs="0" maxOccurs="2"/>
+				<xs:element name="HighLayerCompatibility" type="HighLayerCompatibilityType" minOccurs="0" maxOccurs="2"/>
+				<xs:element name="LowLayerCompatibility" type="LowLayerCompatibilityType" minOccurs="0"/>
+				<xs:element name="ProgressIndicator" type="ProgressIndicatorType" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Display" type="DisplayType" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
+

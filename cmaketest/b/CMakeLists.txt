@@ -1,0 +1,1 @@
+ADD_LIBRARY(bbb SHARED b.cpp)

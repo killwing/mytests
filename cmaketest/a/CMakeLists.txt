@@ -1,0 +1,1 @@
+ADD_LIBRARY(aaa SHARED a.cpp)

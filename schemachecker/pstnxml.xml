@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns1:PSTN xmlns:ns1="http://uri.etsi.org/ngn/params/xml/simservs/pstn" >
+<ns1:BearerCapability>
+<ns1:BCoctet3>
+<ns1:CodingStandard>00</ns1:CodingStandard>
+<ns1:InformationTransferCapability>10000</ns1:InformationTransferCapability>
+</ns1:BCoctet3>
+<ns1:BCoctet4>
+<ns1:TransferMode>00</ns1:TransferMode>
+<ns1:InformationTransferRate>10000</ns1:InformationTransferRate>
+</ns1:BCoctet4>
+<ns1:BCoctet5>
+<ns1:Layer1Identification>01</ns1:Layer1Identification>
+<ns1:UserInfoLayer1Protocol>00011</ns1:UserInfoLayer1Protocol>
+</ns1:BCoctet5>
+</ns1:BearerCapability>
+<ns1:BearerCapability>
+<ns1:BCoctet3>
+<ns1:CodingStandard>00</ns1:CodingStandard>
+<ns1:InformationTransferCapability>10001</ns1:InformationTransferCapability>
+</ns1:BCoctet3>
+<ns1:BCoctet4>
+<ns1:TransferMode>00</ns1:TransferMode>
+<ns1:InformationTransferRate>10000</ns1:InformationTransferRate>
+</ns1:BCoctet4>
+<ns1:BCoctet5>
+<ns1:Layer1Identification>01</ns1:Layer1Identification>
+<ns1:UserInfoLayer1Protocol>00011</ns1:UserInfoLayer1Protocol>
+</ns1:BCoctet5>
+</ns1:BearerCapability>
+</ns1:PSTN>
