@@ -2,35 +2,42 @@
 #include <cassert>
 #include <string.h> // memcpy
 #include <pthread.h>
-#include <google/profiler.h>
+#include <stdio.h>
+#include <gperftools/malloc_extension.h>
 using namespace std;
 
+const int M = 1000000;
+
 void* func(void*) {
-    int* p = new int[500];
+    char* p = new char[5*M];
     delete[] p;
     return 0;
 }
 
 void* func1(void*) {
-    int* p = new int[100];
+    char* p = new char[1*M];
     delete[] p;
     return 0;
 }
 
 void* func2(void*) {
-    int* p = new int[200];
-    delete[] p;
+    char* p = new char[2*M];
+    //delete[] p;
     return 0;
 }
 
 void* func3(void*) {
-    int* p = new int[300];
-    //delete[] p;
-    p = 0;
+    MallocExtension::instance()->SetMemoryReleaseRate(10);
+    char* p = new char[600*M];
+    memset(p, 0, 600*M);
+    sleep(10);
+    cout << "delete" << endl;
+    delete[] p;
+    sleep(3600*20);
     return 0;
 }
 
-int main() {
+int main(int, char**) {
     func(0);
 
     pthread_t thrd1;
@@ -43,5 +50,6 @@ int main() {
     pthread_join(thrd1, 0);
     pthread_join(thrd2, 0);
     pthread_join(thrd3, 0);
+    cout << "exiting" << endl;
     return 0;
 }
