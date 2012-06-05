@@ -2,7 +2,7 @@
 #include <cassert>
 #include <string.h> // memcpy
 #include <pthread.h>
-#include <google/profiler.h>
+#include <gperftools/profiler.h>
 using namespace std;
 
 void* func(void*) {
@@ -17,6 +17,8 @@ void* func(void*) {
 }
 
 void* func1(void*) {
+    sleep(3);
+    ProfilerStart("cpu.prof");
     int nn = 10000;
     while (nn--) {
         int kk = 1000;
@@ -24,6 +26,7 @@ void* func1(void*) {
 
         }
     }
+    ProfilerStop();
     return 0;
 }
 
@@ -39,7 +42,7 @@ void* func2(void*) {
 }
 
 void* func3(void*) {
-    int nn = 30000;
+    int nn = 3000;
     while (nn--) {
         int kk = 3000;
         while (kk--) {

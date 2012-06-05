@@ -9,14 +9,15 @@ using namespace std;
 const int M = 1000000;
 
 void* func(void*) {
-    char* p = new char[5*M];
-    delete[] p;
+    char* p = new char[50*M];
+    //delete[] p;
     return 0;
 }
 
 void* func1(void*) {
-    char* p = new char[1*M];
-    delete[] p;
+    char* p = new char[10*M];
+    sleep(3);
+    //delete[] p;
     return 0;
 }
 
@@ -27,13 +28,8 @@ void* func2(void*) {
 }
 
 void* func3(void*) {
-    MallocExtension::instance()->SetMemoryReleaseRate(10);
-    char* p = new char[600*M];
-    memset(p, 0, 600*M);
-    sleep(10);
-    cout << "delete" << endl;
-    delete[] p;
-    sleep(3600*20);
+    char* p = new char[60*M];
+    memset(p, 0, 60*M);
     return 0;
 }
 
