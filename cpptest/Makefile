@@ -3,7 +3,8 @@ SRCS = main.cpp a.cpp
 DEPS = $(SRCS:.cpp=.d)
 OBJS = $(SRCS:.cpp=.o)
 
-CXXFLAGS = -Wall -g
+CXX = clang++
+CXXFLAGS = -Wno-c++11-extensions
 LDLIBS = -lpthread
 
 all: $(PROG)
