@@ -4,7 +4,7 @@ DEPS = $(SRCS:.cpp=.d)
 OBJS = $(SRCS:.cpp=.o)
 
 CXX = clang++
-CXXFLAGS = -Wno-c++11-extensions
+CXXFLAGS = -std=c++11 -stdlib=libc++
 LDLIBS = -lpthread
 
 all: $(PROG)
