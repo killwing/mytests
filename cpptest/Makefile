@@ -4,8 +4,9 @@ DEPS = $(SRCS:.cpp=.d)
 OBJS = $(SRCS:.cpp=.o)
 
 CXX = clang++
-CXXFLAGS = -std=c++11 -stdlib=libc++
-LDLIBS = -lpthread
+C11FLAGS = -std=c++11 -stdlib=libc++
+CXXFLAGS = $(C11FLAGS)
+#CPPFLAGS = -std=c++11 -stdlib=libc++
 
 all: $(PROG)
 
@@ -13,7 +14,7 @@ $(PROG): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
 %.d: %.cpp
-	$(CXX) -MM $(CPPFLAGS) $< > $@
+	$(CXX) -MM $(CPPFLAGS) $(C11FLAGS) $< > $@
 	@sed -i 's/^\($*\)\.o:/\1.o $@:/' $@
 
 -include $(DEPS)

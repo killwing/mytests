@@ -1,6 +1,6 @@
 #include "a.h"
 
 void
-A::print(){
-    std::cout<<"print x:"<<x_<<std::endl;
+A::printx() {
+    std::cout << "x: " << x_ << std::endl;
 }

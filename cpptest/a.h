@@ -3,26 +3,33 @@
 class A {
 public:
     A() {
-        std::cout<<"A::ctor"<<std::endl;
+        std::cout << "A::ctor " << std::endl;
     }
+
     ~A() {
-        std::cout<<"A::dtor"<<std::endl;
+        std::cout << "A::dtor" << std::endl;
     }
+
     A(const A&) {
-        std::cout<<"A::cpctor"<<std::endl;
+        std::cout << "A::cp ctor" << std::endl;
+    }
+
+    A(A&&) {
+        std::cout << "A::mv ctor" << std::endl;
     }
 
     A& operator=(const A&) {
-        std::cout<<"operator="<<std::endl;
+        std::cout << "A::operator=" << std::endl;
         return *this;
     }
 
-    void print();
-    int foo() {
-        std::cout<<"foo"<<std::endl;        
-        x_ = 100;
-        return 1;
+    A& operator=(A&&) {
+        std::cout << "A::mv operator=" << std::endl;
+        return *this;
     }
+
+    void printx();
+
 private:
-    int x_;
+    int x_ { 100 };
 };
