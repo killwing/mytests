@@ -143,11 +143,10 @@ void
 CmdServer::recieve() {
     running_ = true;
     epoll_event* events = epInfo_->events;
-    sleep(30);
 
     while (running_) {
 
-        printf("reciever(epoll) waiting... fds: %d\n", epInfo_->curfds);
+        printf("recieve(epoll) waiting... fds: %d\n", epInfo_->curfds);
         int nfds = epoll_wait(epInfo_->fd, events, epInfo_->curfds, -1);  // -1 means blocking
         if (nfds == -1) {
             perror("epoll_wait");

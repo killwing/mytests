@@ -38,7 +38,7 @@ CmdWorker::run() {
         {
             LockGuard g(buffer_->getLock());
             while (buffer_->empty(type_)) {
-                printf("worker type[%d] thread[%ld] waiting...\n",
+                printf("worker(type[%d] thread[%ld]) waiting...\n",
                     type_, syscall(SYS_gettid));
                 buffer_->wait();
             }
