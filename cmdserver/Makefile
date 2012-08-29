@@ -1,5 +1,5 @@
 PROG = server
-SRCS = main.cpp CmdServer.cpp CmdReciever.cpp CmdDispatcher.cpp
+SRCS = main.cpp CmdServer.cpp CmdWorker.cpp
 DEPS = $(SRCS:.cpp=.d)
 OBJS = $(SRCS:.cpp=.o)
 
