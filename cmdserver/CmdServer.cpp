@@ -49,6 +49,10 @@ struct EpInfo {
 CmdServer::CmdServer(const std::string& addr, unsigned short port)
     : running_(false), epInfo_(new EpInfo), dispatcher_(new CmdDispatcher) {
 
+    if (addr.empty()) {
+        throw std::runtime_error("empty local address");
+    }
+
     epInfo_->listenfd = socket(AF_INET, SOCK_STREAM, 0);
     if (epInfo_->listenfd < 0) {
         perror("socket");
@@ -66,7 +70,7 @@ CmdServer::CmdServer(const std::string& addr, unsigned short port)
         throw std::runtime_error(strerror(errno));
     }
 
-    if (listen(epInfo_->listenfd, 10) < 0) {
+    if (listen(epInfo_->listenfd, 5) < 0) {
         perror("listen");
         throw std::runtime_error(strerror(errno));
     }
@@ -81,6 +85,8 @@ CmdServer::CmdServer(const std::string& addr, unsigned short port)
         perror("epoll_ctl");
         throw std::runtime_error(strerror(errno));
     }
+
+    printf("cmd server started on %s:%d\n", addr.c_str(), port);
 }
 
 CmdServer::~CmdServer() {
