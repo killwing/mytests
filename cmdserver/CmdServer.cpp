@@ -12,11 +12,8 @@
 #include <string>
 #include <stdexcept>
 
-#include <boost/function.hpp>
-#include <boost/bind.hpp>
-
 #include "CmdServer.h"
-#include "CmdBuffer.h"
+#include "CmdDispatcher.h"
 
 namespace {
 
@@ -50,7 +47,7 @@ struct EpInfo {
 };
 
 CmdServer::CmdServer(const std::string& addr, unsigned short port)
-    : running_(false), epInfo_(new EpInfo), buffer_(new CmdBuffer) {
+    : running_(false), epInfo_(new EpInfo), dispatcher_(new CmdDispatcher) {
 
     epInfo_->listenfd = socket(AF_INET, SOCK_STREAM, 0);
     if (epInfo_->listenfd < 0) {
@@ -120,7 +117,7 @@ CmdServer::buildCmds(char* p, int len) {
     if (i < len) {
         std::string cmd = cmdBuf + std::string(p, i);
         if (cmd.size() >= 2) {
-            buffer_->add(cmd[0], cmd.substr(1, cmd.size() - 1));
+            dispatcher_->dispatch(cmd[0], cmd.substr(1, cmd.size() - 1));
         }
         cmdBuf.clear();
         buildCmds(&p[i+1], len-i-1);
@@ -131,14 +128,12 @@ CmdServer::buildCmds(char* p, int len) {
 
 void
 CmdServer::handleData(char* p, int len) {
-    LockGuard g(buffer_->getLock());
+    LockGuard g(dispatcher_->getLock());
     buildCmds(p, len);
-    buffer_->notify();
+    dispatcher_->notify();
 }
 
 
-#include <iostream>
-using namespace std;
 void
 CmdServer::recieve() {
     running_ = true;

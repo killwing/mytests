@@ -2,11 +2,10 @@
 #define CMDSERVER_H
 
 #include <string>
-#include <queue>
 #include <boost/smart_ptr.hpp>
 
 class EpInfo;
-class CmdBuffer;
+class CmdDispatcher;
 
 // a tcp server using epoll
 class CmdServer {
@@ -26,7 +25,7 @@ private:
     bool running_;
 
     boost::scoped_ptr<EpInfo> epInfo_;
-    boost::scoped_ptr<CmdBuffer> buffer_;
+    boost::scoped_ptr<CmdDispatcher> dispatcher_;
 };
 
 #endif // CMDSERVER_H
