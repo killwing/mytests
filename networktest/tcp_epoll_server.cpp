@@ -166,7 +166,7 @@ int main()
     int curfds = 1;
 
 
-    ev.events = EPOLLIN | EPOLLET;  
+    ev.events = EPOLLIN;  
     ev.data.fd = listenfd;  
     if (epoll_ctl(epfd, EPOLL_CTL_ADD, listenfd, &ev) < 0)   
     {  

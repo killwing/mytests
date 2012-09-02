@@ -79,7 +79,7 @@ CmdServer::CmdServer(const std::string& addr, unsigned short port)
     epInfo_->curfds = 1;
 
     epoll_event ev;
-    ev.events = EPOLLIN | EPOLLET;
+    ev.events = EPOLLIN;
     ev.data.fd = epInfo_->listenfd;
     if (epoll_ctl(epInfo_->fd, EPOLL_CTL_ADD, epInfo_->listenfd, &ev) < 0) {
         perror("epoll_ctl");
