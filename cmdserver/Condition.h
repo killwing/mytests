@@ -5,7 +5,7 @@
 #include <boost/noncopyable.hpp>
 #include "MutexLock.h"
 
-class Condition : public boost::noncopyable {
+class Condition : private boost::noncopyable {
 public:
     Condition() {
         pthread_cond_init(&cond_, 0);
