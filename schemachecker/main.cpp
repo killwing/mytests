@@ -102,11 +102,11 @@ private:
 };
 
 
-class DOMAOCErrorHandler : public DOMErrorHandler
+class MyDOMErrorHandler : public DOMErrorHandler
 {
 public:
-    DOMAOCErrorHandler()
-        :fSawErrors(false)
+    MyDOMErrorHandler()
+        : fSawErrors(false)
     {
     }
 
@@ -138,8 +138,8 @@ public:
     }
 
 private :
-    DOMAOCErrorHandler(const DOMAOCErrorHandler&);
-    void operator=(const DOMAOCErrorHandler&);
+    MyDOMErrorHandler(const MyDOMErrorHandler&);
+    void operator=(const MyDOMErrorHandler&);
     bool fSawErrors;
 };
 
@@ -183,14 +183,14 @@ int main(int argc, char* argv[])
         parser->setFeature(XMLUni::fgDOMDatatypeNormalization, true);
 
         // And create our error handler and install it
-        DOMAOCErrorHandler errorHandler;
+        MyDOMErrorHandler errorHandler;
         parser->setErrorHandler(&errorHandler);
 
         // use external schema file if provided
         parser->loadGrammar(schema, Grammar::SchemaGrammarType, true);
         parser->setFeature(XMLUni::fgXercesUseCachedGrammarInParse, true);
 
-        MemBufInputSource* mbis = new MemBufInputSource(reinterpret_cast<const XMLByte*>(xml.c_str()), xml.length(), "PSTNXML"); // do not adopt the buffer
+        MemBufInputSource* mbis = new MemBufInputSource(reinterpret_cast<const XMLByte*>(xml.c_str()), xml.length(), "TESTXML"); // do not adopt the buffer
         Wrapper4InputSource is(mbis); // adopt the input source
 
         parser->parse(is);
