@@ -1,5 +1,6 @@
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <sys/un.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h>
@@ -9,6 +10,7 @@
 #include <errno.h>
 #include <cstring>
 #include <stdio.h>
+#include <stdlib.h>
 using namespace std;
 
 #define MAXLINE 1000
@@ -29,7 +31,7 @@ void setsendbuff(int fd, socklen_t n = 0)
     cout<<"after - sendbuf: "<<sendbuflen<<endl;  
 }
 
-void echo(int fd, const sockaddr_in& servaddr)
+void echo(int fd, const sockaddr_un& servaddr)
 {
     char recvline[MAXLINE + 1];
     while (1)
@@ -42,7 +44,6 @@ void echo(int fd, const sockaddr_in& servaddr)
             break;
         }
 
-        // auto bind local address & port
         if (sendto(fd, str.c_str(), str.size(), 0, (sockaddr*)&servaddr, sizeof(servaddr)) < 0)
         {
             perror("sendto");
@@ -67,15 +68,13 @@ void echo(int fd, const sockaddr_in& servaddr)
     }
 }
 
-void verbose(int fd, const sockaddr_in& servaddr)
+void verbose(int fd, const sockaddr_un& servaddr)
 {
+    //setsendbuff(fd);
     std::string str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789000";
-    //std::string str = "ab";
     int sum = 0;
-    int cnt = 2000;
-    while (cnt--)
+    while (1)
     {
-        // auto bind local address & port
         int n = sendto(fd, str.c_str(), str.size(), 0 /* MSG_DONTWAIT */, (sockaddr*)&servaddr, sizeof(servaddr));
         if ( n < 0)
         {
@@ -93,22 +92,32 @@ void verbose(int fd, const sockaddr_in& servaddr)
 
 int main()
 { 
-    int socketfd = socket(AF_INET, SOCK_DGRAM, 0);
+    int socketfd = socket(AF_UNIX, SOCK_DGRAM, 0);
     if (socketfd < 0)
     {
         perror("socket");
         return 0;
     }
 
-    sockaddr_in servaddr;
-    memset(&servaddr, 0, sizeof(servaddr));
-    servaddr.sin_family = AF_INET;
-    servaddr.sin_port = htons(7777);
-    if (inet_pton(AF_INET, "127.0.0.1", &servaddr.sin_addr) <= 0)
+    sockaddr_un cliaddr;
+    memset(&cliaddr, 0, sizeof(cliaddr));
+    cliaddr.sun_family = AF_UNIX;
+
+    char temp[] = "client.sock.XXXXXX";
+    mkstemp(temp);
+    printf("use temp path: %s\n", temp);
+    strcpy(cliaddr.sun_path, temp);
+    unlink(temp); // no need anymore
+    if (bind(socketfd, (sockaddr*)&cliaddr, sizeof(cliaddr))< 0)
     {
-        perror("inet_pton");
+        perror("bind");
         return 0;
     }
+
+    sockaddr_un servaddr;
+    memset(&servaddr, 0, sizeof(servaddr));
+    servaddr.sun_family = AF_UNIX;
+    strcpy(servaddr.sun_path, "server.sock");
 
     //echo(socketfd, servaddr);
     verbose(socketfd, servaddr);
