@@ -18,7 +18,7 @@ $(PROG): %: %.o
 -include $(DEPS)
 
 clean:
-	@$(RM) $(OBJS) $(DEPS) $(PROG) client.sock* server.sock* test.pipe
+	@$(RM) $(OBJS) $(DEPS) $(PROG) server.sock test.pipe
 
 
 

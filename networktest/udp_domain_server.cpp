@@ -76,7 +76,7 @@ void eat(int fd)
 
 int main()
 {
-    int socketfd = socket(AF_UNIX, SOCK_DGRAM, 0);
+    int socketfd = socket(AF_LOCAL, SOCK_DGRAM, 0);
     if (socketfd < 0)
     {
         perror("socket");
@@ -86,7 +86,7 @@ int main()
 
     sockaddr_un servaddr;
     memset(&servaddr, 0, sizeof(servaddr));
-    servaddr.sun_family = AF_UNIX;
+    servaddr.sun_family = AF_LOCAL;
     strcpy(servaddr.sun_path, "server.sock");
 
     unlink(servaddr.sun_path);

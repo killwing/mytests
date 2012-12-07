@@ -92,7 +92,7 @@ void verbose(int fd, const sockaddr_un& servaddr)
 
 int main()
 { 
-    int socketfd = socket(AF_UNIX, SOCK_DGRAM, 0);
+    int socketfd = socket(AF_LOCAL, SOCK_DGRAM, 0);
     if (socketfd < 0)
     {
         perror("socket");
@@ -101,13 +101,12 @@ int main()
 
     sockaddr_un cliaddr;
     memset(&cliaddr, 0, sizeof(cliaddr));
-    cliaddr.sun_family = AF_UNIX;
+    cliaddr.sun_family = AF_LOCAL;
 
-    char temp[] = "client.sock.XXXXXX";
-    mkstemp(temp);
+    char temp[L_tmpnam];
+    tmpnam(temp);
     printf("use temp path: %s\n", temp);
     strcpy(cliaddr.sun_path, temp);
-    unlink(temp); // no need anymore
     if (bind(socketfd, (sockaddr*)&cliaddr, sizeof(cliaddr))< 0)
     {
         perror("bind");
@@ -116,7 +115,7 @@ int main()
 
     sockaddr_un servaddr;
     memset(&servaddr, 0, sizeof(servaddr));
-    servaddr.sun_family = AF_UNIX;
+    servaddr.sun_family = AF_LOCAL;
     strcpy(servaddr.sun_path, "server.sock");
 
     //echo(socketfd, servaddr);
